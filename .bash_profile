@@ -4,6 +4,9 @@ GREEN="\[\e[1;32m\]"
 CYAN="\[\e[36m\]"
 export PS1="$GREEN\u : $CYAN\W$GREEN \$ $NORMAL"
 
+# default editor
+export EDITOR=/usr/local/bin/nvim
+
 # ls colors
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
@@ -11,21 +14,100 @@ export LSCOLORS=GxFxCxDxBxegedabagaced
 # Java Home
 export JAVA_HOME=$(/usr/libexec/java_home)
 
-if [ -f $HOME/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
-# add the bin to PATH if found
-if [ -d $HOME/bin ]; then
-    export PATH=~/bin:$PATH
-fi
-
-# Load RVM into a shell session *as a function*
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-
 # Load the git autom comletition
 [[ -s "$HOME/.git-completion.bash" ]] && source "$HOME/.git-completion.bash"
 
-export SSL_CERT_FILE=/usr/local/etc/cacert.pem
+# Stop the git merge audoedit nagging
+export GIT_MERGE_AUTOEDIT=no
 
-export EDITOR=/usr/local/bin/vim
+export GPG_TTY=$(tty)
+# Add the following to your shell init to set up gpg-agent automatically for every shell
+if [ -f ~/.gnupg/.gpg-agent-info ] && [ -n "$(pgrep gpg-agent)" ]; then
+  source ~/.gnupg/.gpg-agent-info
+  export GPG_AGENT_INFO
+else
+  eval $(gpg-agent --daemon --write-env-file ~/.gnupg/.gpg-agent-info)
+fi
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+export WEB_CONCURRENCY=1 # Puma workers count
+
+# Mainly for SSH
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+export GOPATH=~/go
+
+# fzf
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+export FZF_DEFAULT_COMMAND="rg --files"
+
+# Node.js
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+find_up() {
+  path=$(pwd)
+  while [[ "$path" != "" && ! -e "$path/$1" ]]; do
+    path=${path%/*}
+  done
+  echo "$path"
+}
+
+cd_nvm() {
+  cd "$@";
+  nvm_path=$(find_up .nvmrc | tr -d '[:space:]')
+
+  # If there are no .nvmrc file, use the default nvm version
+  if [[ ! $nvm_path = *[^[:space:]]* ]]; then
+    local default_version=$(nvm version default)
+
+    # If there is no default version, set it to `node`
+    # This will use the latest version on your machine
+    if [[ $default_version == "N/A" ]]; then
+      nvm alias default node
+      default_version=$(nvm version default)
+    fi
+
+    # If the current version is not the default version, set it to use the default version
+    if [[ $(nvm current) != "$default_version" ]]; then
+      nvm use default
+    fi
+  elif [[ -s $nvm_path/.nvmrc && -r $nvm_path/.nvmrc ]]; then
+    local nvm_version=$(<"$nvm_path"/.nvmrc)
+
+    # Add the `v` suffix if it does not exists in the .nvmrc file
+    if [[ $nvm_version != v* ]]; then
+      nvm_version="v""$nvm_version"
+    fi
+
+    # If it is not already installed, install it
+    if [[ $(nvm ls "$nvm_version" | tr -d '[:space:]') == "N/A" ]]; then
+      nvm install "$nvm_version"
+    fi
+
+    if [[ $(nvm current) != "$nvm_version" ]]; then
+      nvm use "$nvm_version"
+    fi
+  fi
+}
+alias cd='cd_nvm'
+
+# PDF utils
+pdfcompress() {
+  gs -q -dNOPAUSE -dBATCH -dSAFER -sDEVICE=pdfwrite -dCompatibilityLevel=1.3 \
+    -dPDFSETTINGS=/screen -dEmbedAllFonts=true -dSubsetFonts=true \
+    -dColorImageDownsampleType=/Bicubic -dColorImageResolution=144 \
+    -dGrayImageDownsampleType=/Bicubic -dGrayImageResolution=144 \
+    -dMonoImageDownsampleType=/Bicubic -dMonoImageResolution=144 -sOutputFile=$1.compressed.pdf $1
+}
+
+[[ -s "$HOME/.shell_aliases" ]] && source "$HOME/.shell_aliases"
+[[ -d "$HOME/bin" ]] && export PATH=~/bin:$PATH
+
+set -o vi # Bash Vi mode

@@ -1,0 +1,8 @@
+command -v md5sum > /dev/null || alias md5sum="md5"
+command -v tailf > /dev/null || alias tailf="tail -f"
+
+# fzf
+alias fzfp="fzf --preview 'head -100 {}'"
+alias fzfv='vim $(fzfp)'
+
+alias yarn-clear='rm -Rf node_modules && yarn cache clean && yarn'
