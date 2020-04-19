@@ -13,13 +13,17 @@ backup_file() {
   mv -f "$file" "${file}.${old_file_suffix}" 2>/dev/null || true
 }
 
+escape_hidden_filename() {
+  echo ${1/#\./_}
+}
+
 link_bash_profile() {
   local bash_profile=".bash_profile"
   local bash_profile_dest="${dest_dir}/${bash_profile}"
 
   backup_file "$bash_profile_dest"
   rm -f "$bash_profile_dest"
-  ln -sv "${dotfiles_dir}/${bash_profile}" "$bash_profile_dest"
+  ln -sv "${dotfiles_dir}/$(escape_hidden_filename "$bash_profile")" "$bash_profile_dest"
 }
 
 link_fzf() {
@@ -31,8 +35,8 @@ link_fzf() {
   backup_file "$fzf_bash_dest"
   backup_file "$fzf_zsh_dest"
   rm -f "$fzf_bash_dest" "$fzf_zsh_dest"
-  ln -sv "${dotfiles_dir}/${fzf_bash}" "$fzf_bash_dest"
-  ln -sv "${dotfiles_dir}/${fzf_zsh}" "$fzf_zsh_dest"
+  ln -sv "${dotfiles_dir}/$(escape_hidden_filename "$fzf_bash")" "$fzf_bash_dest"
+  ln -sv "${dotfiles_dir}/$(escape_hidden_filename "$fzf_zsh")" "$fzf_zsh_dest"
 }
 
 link_gemrc() {
@@ -41,7 +45,7 @@ link_gemrc() {
 
   backup_file "$gemrc_dest"
   rm -f "$gemrc_dest"
-  ln -sv "${dotfiles_dir}/${gemrc}" "$gemrc_dest"
+  ln -sv "${dotfiles_dir}/$(escape_hidden_filename "$gemrc")" "$gemrc_dest"
 }
 
 link_gitconfig() {
@@ -50,7 +54,7 @@ link_gitconfig() {
 
   backup_file "$gitconfig_dest"
   rm -f "$gitconfig_dest"
-  ln -sv "${dotfiles_dir}/${gitconfig}" "$gitconfig_dest"
+  ln -sv "${dotfiles_dir}/$(escape_hidden_filename "$gitconfig")" "$gitconfig_dest"
 }
 
 link_gitignore_global() {
@@ -59,7 +63,7 @@ link_gitignore_global() {
 
   backup_file "$gitignore_global_dest"
   rm -f "$gitignore_global_dest"
-  ln -sv "${dotfiles_dir}/${gitignore_global}" "$gitignore_global_dest"
+  ln -sv "${dotfiles_dir}/$(escape_hidden_filename "$gitignore_global")" "$gitignore_global_dest"
 }
 
 link_my_zshrc() {
@@ -68,7 +72,7 @@ link_my_zshrc() {
 
   backup_file "$my_zshrc_dest"
   rm -f "$my_zshrc_dest"
-  ln -sv "${dotfiles_dir}/${my_zshrc}" "$my_zshrc_dest"
+  ln -sv "${dotfiles_dir}/$(escape_hidden_filename "$my_zshrc")" "$my_zshrc_dest"
 }
 
 link_pip_dir() {
@@ -77,7 +81,7 @@ link_pip_dir() {
 
   backup_file "$pip_dir_dest"
   rm -Rf "$pip_dir_dest"
-  ln -sv "${dotfiles_dir}/${pip_dir}" "$pip_dir_dest"
+  ln -sv "${dotfiles_dir}/$(escape_hidden_filename "$pip_dir")" "$pip_dir_dest"
 }
 
 link_rvmrc() {
@@ -86,7 +90,7 @@ link_rvmrc() {
 
   backup_file "$rvmrc_dest"
   rm -f "$rvmrc_dest"
-  ln -sv "${dotfiles_dir}/${rvmrc}" "$rvmrc_dest"
+  ln -sv "${dotfiles_dir}/$(escape_hidden_filename "$rvmrc")" "$rvmrc_dest"
 }
 
 link_shell_aliases() {
@@ -95,7 +99,7 @@ link_shell_aliases() {
 
   backup_file "$shell_aliases_dest"
   rm -f "$shell_aliases_dest"
-  ln -sv "${dotfiles_dir}/${shell_aliases}" "$shell_aliases_dest"
+  ln -sv "${dotfiles_dir}/$(escape_hidden_filename "$shell_aliases")" "$shell_aliases_dest"
 }
 
 link_skylight() {
@@ -104,7 +108,7 @@ link_skylight() {
 
   backup_file "$skylight_dest"
   rm -f "$skylight_dest"
-  ln -sv "${dotfiles_dir}/${skylight}" "$skylight_dest"
+  ln -sv "${dotfiles_dir}/$(escape_hidden_filename "$skylight")" "$skylight_dest"
 }
 
 link_sqliterc() {
@@ -113,7 +117,7 @@ link_sqliterc() {
 
   backup_file "$sqliterc_dest"
   rm -f "$sqliterc_dest"
-  ln -sv "${dotfiles_dir}/${sqliterc}" "$sqliterc_dest"
+  ln -sv "${dotfiles_dir}/$(escape_hidden_filename "$sqliterc")" "$sqliterc_dest"
 }
 
 link_tmux() {
@@ -127,7 +131,7 @@ link_tmux() {
 
   rm -f "$tmux_conf_dest" "$tmate_conf_dest"
 
-  ln -sv "${dotfiles_dir}/${tmux_conf}" "$tmux_conf_dest"
+  ln -sv "${dotfiles_dir}/$(escape_hidden_filename "$tmux_conf")" "$tmux_conf_dest"
   ln -sv ${tmux_conf} "$tmate_conf_dest"
 }
 
