@@ -14,7 +14,7 @@ backup_file() {
 }
 
 escape_hidden_filename() {
-  echo ${1/#\./_}
+  echo "${1/#\./_}"
 }
 
 link_bash_profile() {
