@@ -6,3 +6,5 @@ alias fzfp="fzf --preview 'head -100 {}'"
 alias fzfv='vim $(fzfp)'
 
 alias yarn-clear='rm -Rf node_modules && yarn cache clean && yarn'
+
+alias bundle-ctags='ctags -R --languages=ruby --exclude=.git --exclude=log --exclude=node_modules --exclude=tmp -f .tags . $(bundle list --paths)'
