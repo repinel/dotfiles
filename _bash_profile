@@ -111,3 +111,9 @@ pdfcompress() {
 [[ -d "$HOME/bin" ]] && export PATH=~/bin:$PATH
 
 set -o vi # Bash Vi mode
+
+export EJSON_KEYDIR=/opt/ejson/keys
+
+## END
+
+if [ -e /Users/roquepinel/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/roquepinel/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

@@ -7,4 +7,12 @@ alias fzfv='vim $(fzfp)'
 
 alias yarn-clear='rm -Rf node_modules && yarn cache clean && yarn'
 
+alias be='bundle exec'
 alias bundle-ctags='ctags -R --languages=ruby --exclude=.git --exclude=log --exclude=node_modules --exclude=tmp -f .tags . $(bundle list --paths)'
+
+# checkout master and run command to clean any merged branches
+alias git-clean-branches-master='git branch --merged master | grep -v "\* master" | xargs -n 1 git branch -d'
+alias git-clean-branches-main='git branch --merged main | grep -v "\* main" | xargs -n 1 git branch -d'
+
+alias git-ch-master='git fetch origin master && git rebase origin/master'
+alias git-ch-main='git fetch origin main && git rebase origin/main'
