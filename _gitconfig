@@ -2,8 +2,6 @@
 	name = Roque Pinel
 	email = 1685896+repinel@users.noreply.github.com
 	signingkey = 3495AD8927F455E2
-[credential]
-	helper = osxkeychain
 [commit]
 	gpgsign = true
 [core]
