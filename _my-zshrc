@@ -1,5 +1,5 @@
 # default editor
-export EDITOR=/usr/local/bin/nvim
+export EDITOR=/opt/homebrew/bin/nvim
 
 # Stop the git merge audoedit nagging
 export GIT_MERGE_AUTOEDIT=no
