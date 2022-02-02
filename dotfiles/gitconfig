@@ -25,6 +25,7 @@
 	;pf = pull --ff --ff-only
 	pushf = push --force-with-lease
 	pushu = push --set-upstream
+	branch-cleanup = ! git branch --merged | grep -v \"*\" | xargs git branch -d
 [color]
 	status = auto
 	branch = auto
