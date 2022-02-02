@@ -9,7 +9,6 @@ dotfiles_dir="$(pwd)"
 
 link_file() {
   local file_origin="$1"
-  local file=""
   local file_dest
   file_dest="${dest_dir}/.$(basename "$file_origin")"
 
