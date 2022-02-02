@@ -75,15 +75,6 @@ link_my_zshrc() {
   ln -sv "${dotfiles_dir}/$(escape_hidden_filename "$my_zshrc")" "$my_zshrc_dest"
 }
 
-link_pip_dir() {
-  local pip_dir=".pip"
-  local pip_dir_dest="${dest_dir}/${pip_dir}"
-
-  backup_file "$pip_dir_dest"
-  rm -Rf "$pip_dir_dest"
-  ln -sv "${dotfiles_dir}/$(escape_hidden_filename "$pip_dir")" "$pip_dir_dest"
-}
-
 link_rvmrc() {
   local rvmrc=".rvmrc"
   local rvmrc_dest="${dest_dir}/${rvmrc}"
@@ -100,15 +91,6 @@ link_shell_aliases() {
   backup_file "$shell_aliases_dest"
   rm -f "$shell_aliases_dest"
   ln -sv "${dotfiles_dir}/$(escape_hidden_filename "$shell_aliases")" "$shell_aliases_dest"
-}
-
-link_skylight() {
-  local skylight=".skylight"
-  local skylight_dest="${dest_dir}/${skylight}"
-
-  backup_file "$skylight_dest"
-  rm -f "$skylight_dest"
-  ln -sv "${dotfiles_dir}/$(escape_hidden_filename "$skylight")" "$skylight_dest"
 }
 
 link_sqliterc() {
