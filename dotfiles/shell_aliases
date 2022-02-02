@@ -16,10 +16,3 @@ alias git-clean-branches-main='git branch --merged main | grep -v "\* main" | xa
 
 alias git-ch-master='git fetch origin master && git rebase origin/master'
 alias git-ch-main='git fetch origin main && git rebase origin/main'
-
-alias gs='git status'
-alias ga='git add'
-alias gap='git add -p'
-alias gc='git checkout'
-alias gcp='git checkout -p'
-alias gco='git commit'

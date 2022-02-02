@@ -16,13 +16,12 @@
 	df = diff
 	st = status
 	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	ap = add -p
 	lg = log -p
 	br = branch
-	;pp = !git pull && git push
 	amend = commit --amend --no-edit
 	undo-commit = reset --soft HEAD~
 	pr = pull --rebase
-	;pf = pull --ff --ff-only
 	pushf = push --force-with-lease
 	pushu = push --set-upstream
 	branch-cleanup = ! git branch --merged | grep -v \"*\" | xargs git branch -d
