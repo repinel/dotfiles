@@ -1,6 +1,10 @@
 command -v md5sum > /dev/null || alias md5sum="md5"
 command -v tailf > /dev/null || alias tailf="tail -f"
 
+# colorful ls
+alias ls='ls -G'
+alias ll='ls -lG'
+
 # fzf
 alias fzfp="fzf --preview 'head -100 {}'"
 alias fzfv='vim $(fzfp)'

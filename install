@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+declare dest_dir="$HOME"
+declare dotfiles_dir
+
+dotfiles_dir="$(pwd)"
+
+log_info() {
+  echo "[dotfiles] $1"
+}
+
+link_file() {
+  local file_origin="$1"
+  local file_dest
+  file_dest="${dest_dir}/.$(basename "$file_origin")"
+
+  rm -Rf "$file_dest"
+  ln -sv "$file_origin" "$file_dest"
+}
+
+fetch_github_username() {
+  local github_username
+  github_username=$(cat /etc/spin/user/github-username)
+  echo "$github_username"
+}
+
+setup_nvim_config() {
+  local nvim_config_dest="${dest_dir}/.config/nvim"
+  local github_username
+  github_username=$(fetch_github_username)
+
+  rm -Rf "$nvim_config_dest"
+
+  git clone --depth 1 "https://github.com/${github_username}/nvimfiles" "$nvim_config_dest"
+
+  pushd "$nvim_config_dest"
+
+  git submodule update --init --recursive
+
+  nvim --headless +PluginInstall +qa
+
+  popd
+}
+
+setup_spin_gitconfig() {
+  local gitconfig=".gitconfig"
+  local gitconfig_dest="${dest_dir}/${gitconfig}"
+  local github_username
+  github_username=$(fetch_github_username)
+
+  log_info "Setting up gitconfig..."
+  sed -i -e "s/1685896+repinel@users.noreply.github.com/${github_username}/" "$gitconfig_dest"
+  sed -i -e "s/signingkey/;signingkey/" "$gitconfig_dest"
+}
+
+link_spin_dotfiles() {
+  local files=( "gemrc" "gitconfig" "gitignore" "my-zshrc" "shell_aliases" "tmux.conf" )
+
+  for file in "${files[@]}"; do
+    link_file "${dotfiles_dir}/dotfiles/${file}"
+  done
+
+  local my_zshrc="my-zshrc"
+  local my_zshrc_dest="${dest_dir}/.zshrc.d/${my_zshrc}"
+  rm -f "$my_zshrc_dest"
+  ln -sv "${dotfiles_dir}/${my_zshrc}" "$my_zshrc_dest"
+}
+
+main() {
+  if [ "$SPIN" ]; then
+    link_my_zshrc
+    link_spin_dotfiles
+    setup_spin_gitconfig
+    setup_nvim_config
+  else
+    log_info "Linking dotfiles..."
+    for file in "${dotfiles_dir}/dotfiles"/*; do
+      link_file "$file"
+    done
+
+    if ! grep -q "my-zshrc" ~/.zshrc; then
+      log_info "Adding my-zshrc to zshrc..."
+      echo -e '\nsource "${HOME}/.my-zshrc"' >> ~/.zshrc
+    fi
+  fi
+}
+
+main
+
+log_info "Done."

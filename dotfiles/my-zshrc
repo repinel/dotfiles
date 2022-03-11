@@ -1,6 +1,9 @@
 # default editor
 export EDITOR=/opt/homebrew/bin/nvim
 
+# colorful ls
+export LSCOLORS="Gxfxcxdxbxegedabagacad"
+
 # Stop the git merge audoedit nagging
 export GIT_MERGE_AUTOEDIT=no
 
@@ -22,7 +25,43 @@ prompt_context() {} # Remove username from PS1
 bindkey -v
 bindkey "^R" history-incremental-search-backward
 
+# Enable history search with Up/Down
+autoload -U history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+# UP key. Similar To ${terminfo[kcuu1]}".
+bindkey "^[[A" history-beginning-search-backward-end
+# DOWN key. Similar to "${terminfo[kcud1]}"
+bindkey "^[[B" history-beginning-search-forward-end
+
 [[ -s "$HOME/.shell_aliases" ]] && source "$HOME/.shell_aliases"
 [[ -d "$HOME/bin" ]] && export PATH=~/bin:$PATH
+
+if [ "$SPIN" ]; then
+  # for spin
+else
+  setopt PROMPT_SUBST
+  setopt AUTO_CD
+  setopt NO_BEEP
+  setopt COMPLETE_IN_WORD
+
+  HISTSIZE=100000
+  SAVEHIST=100000
+  setopt HIST_FCNTL_LOCK
+  setopt HIST_IGNORE_DUPS
+  setopt HIST_IGNORE_SPACE
+  unsetopt HIST_EXPIRE_DUPS_FIRST
+
+  setopt PROMPT_SP
+  setopt AUTO_PUSHD
+  unsetopt MULTIOS
+
+  autoload -Uz vcs_info
+  precmd_functions+=( vcs_info )
+  zstyle ':vcs_info:*' enable git
+  zstyle ':vcs_info:git:*' formats $'%F{blue}%b%F{yellow}%m%{\x1b[0m%} '
+  zstyle ':vcs_info:git:*' actionformats $'%F{blue}%b%F{grey}%u%c %F{grey}[%F{yellow}%a %m%F{grey}]%{\x1b[0m%} '
+  PROMPT=$'%(?.%F{green}➜ .%F{red}✗%?)%f %B%~%b $vcs_info_msg_0_%(!.%F{red}#.%{\x1b[1;38;5;33m%}%%)%{\x1b[0m%} '
+fi
 
 #set -o vi # Shell Vi mode

@@ -3,7 +3,7 @@
 	email = 1685896+repinel@users.noreply.github.com
 	signingkey = 3495AD8927F455E2
 [commit]
-	gpgsign = true
+	gpgSign = true
 [core]
 	autocrlf = input
 	excludesfile = ~/.gitignore
@@ -33,11 +33,9 @@
 	commit = true
 [merge]
 	tool = vimdiff
-	;tool = meld
 [diff]
 	tool = vimdiff
 	algorithm = patience
-	;tool = meld
 [difftool]
 	prompt = false
 	keepTemporaries = false
@@ -55,16 +53,5 @@
 [credential]
 	helper =
 	helper = store --file /opt/dev/var/private/git_credential_store
-[url "https://github.com/Shopify/"]
-	insteadOf = git@github.com:Shopify/
-	insteadOf = git@github.com:shopify/
-	insteadOf = ssh://git@github.com/Shopify/
-	insteadOf = ssh://git@github.com/shopify/
-[includeIf "gitdir:~/OSS/"]
-	path = ~/OSS/.gitconfig
-[includeIf "gitdir:~/.dotfiles"]
-	path = ~/OSS/.gitconfig
-[includeIf "gitdir:~/.config/nvim"]
-	path = ~/OSS/.gitconfig
 [pager]
 	branch = false
