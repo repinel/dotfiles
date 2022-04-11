@@ -61,4 +61,4 @@
 [pager]
 	branch = false
 [include]
-	path = ~/.config/dev/gitconfig
+	path = /Users/roquepinel/.config/dev/gitconfig
