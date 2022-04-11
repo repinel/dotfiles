@@ -5,7 +5,7 @@ set -eo pipefail
 declare dest_dir="$HOME"
 declare dotfiles_dir
 
-dotfiles_dir="$(pwd)"
+dotfiles_dir="$(pwd)/dotfiles"
 
 log_info() {
   echo "[dotfiles] $1"
@@ -47,11 +47,9 @@ setup_nvim_config() {
 setup_spin_gitconfig() {
   local gitconfig=".gitconfig"
   local gitconfig_dest="${dest_dir}/${gitconfig}"
-  local github_username
-  github_username=$(fetch_github_username)
 
   log_info "Setting up gitconfig..."
-  sed -i -e "s/1685896+repinel@users.noreply.github.com/${github_username}/" "$gitconfig_dest"
+  sed -i -e "s/1685896+repinel@users.noreply.github.com/roque.pinel@shopify.com/" "$gitconfig_dest"
   sed -i -e "s/signingkey/;signingkey/" "$gitconfig_dest"
 }
 
@@ -59,7 +57,7 @@ link_spin_dotfiles() {
   local files=( "gemrc" "gitconfig" "gitignore" "my-zshrc" "shell_aliases" "tmux.conf" )
 
   for file in "${files[@]}"; do
-    link_file "${dotfiles_dir}/dotfiles/${file}"
+    link_file "${dotfiles_dir}/${file}"
   done
 
   local my_zshrc="my-zshrc"
@@ -75,7 +73,7 @@ main() {
     setup_nvim_config
   else
     log_info "Linking dotfiles..."
-    for file in "${dotfiles_dir}/dotfiles"/*; do
+    for file in "$dotfiles_dir"/*; do
       link_file "$file"
     done
 
