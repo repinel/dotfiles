@@ -54,7 +54,7 @@ setup_spin_gitconfig() {
 }
 
 link_spin_dotfiles() {
-  local files=( "gemrc" "gitconfig" "gitignore" "my-zshrc" "shell_aliases" "tmux.conf" )
+  local files=( "gemrc" "gitconfig" "gitignore" "shell_aliases" "tmux.conf" )
 
   for file in "${files[@]}"; do
     link_file "${dotfiles_dir}/${file}"
