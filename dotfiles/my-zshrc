@@ -45,6 +45,7 @@ else
   setopt NO_BEEP
   setopt COMPLETE_IN_WORD
 
+  # zsh history
   HISTSIZE=100000
   SAVEHIST=100000
   setopt HIST_FCNTL_LOCK
@@ -55,6 +56,9 @@ else
   setopt PROMPT_SP
   setopt AUTO_PUSHD
   unsetopt MULTIOS
+
+  # auto completion
+  autoload -U compinit && compinit
 
   autoload -Uz vcs_info
   precmd_functions+=( vcs_info )
