@@ -1,8 +1,5 @@
 # default editor
-export EDITOR=/opt/homebrew/bin/nvim
-
-# colorful ls
-export LSCOLORS="Gxfxcxdxbxegedabagacad"
+export EDITOR=$(which nvim)
 
 # Stop the git merge audoedit nagging
 export GIT_MERGE_AUTOEDIT=no
@@ -18,8 +15,6 @@ export LANG=en_US.UTF-8
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND="rg --files"
-
-prompt_context() {} # Remove username from PS1
 
 # Enable history search with Ctrl+R
 bindkey -v
@@ -40,6 +35,11 @@ bindkey "^[[B" history-beginning-search-forward-end
 if [ "$SPIN" ]; then
   # for spin
 else
+  # colorful ls
+  export LSCOLORS="Gxfxcxdxbxegedabagacad"
+  alias ls='ls -G'
+  alias ll='ls -lG'
+
   setopt PROMPT_SUBST
   setopt AUTO_CD
   setopt NO_BEEP
