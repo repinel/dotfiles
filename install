@@ -70,7 +70,6 @@ link_spin_dotfiles() {
 
 main() {
   if [ "$SPIN" ]; then
-    link_my_zshrc
     link_spin_dotfiles
     setup_spin_gitconfig
     setup_nvim_config
@@ -82,7 +81,7 @@ main() {
 
     if ! grep -q "my-zshrc" ~/.zshrc; then
       log_info "Adding my-zshrc to zshrc..."
-      echo -e '\nsource "${HOME}/.my-zshrc"' >> ~/.zshrc
+      echo -e "\nsource \"${HOME}/.my-zshrc\"" >> ~/.zshrc
     fi
   fi
 }
