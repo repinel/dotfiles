@@ -1,0 +1,19 @@
+[commit]
+	gpgSign = true
+[user]
+	email = 1685896+repinel@users.noreply.github.com
+	signingkey = 3495AD8927F455E2
+[credential]
+	helper =
+	helper = store --file /opt/dev/var/private/git_credential_store
+	usehttppath = false
+[core]
+	commitGraph = true
+[diff]
+	algorithm = patience
+[gc]
+	writeCommitGraph = true
+[protocol]
+	version = 2
+[credential "https://github.com"]
+	usehttppath = false

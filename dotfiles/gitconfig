@@ -53,12 +53,9 @@
 	ff = true
 [gc]
 	writeCommitGraph = true
-[protocol]
-	version = 2
-[credential]
-	helper =
-	helper = store --file /opt/dev/var/private/git_credential_store
 [pager]
 	branch = false
+[include]
+	path = /Users/roque/personal_gitconfig
 [include]
 	path = /Users/roquepinel/.config/dev/gitconfig
