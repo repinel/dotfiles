@@ -29,6 +29,11 @@ bindkey "^[[A" history-beginning-search-backward-end
 # DOWN key. Similar to "${terminfo[kcud1]}"
 bindkey "^[[B" history-beginning-search-forward-end
 
+# HOME key.
+bindkey "^[[H" beginning-of-line
+# END key.
+bindkey "^[[F" end-of-line
+
 [[ -s "$HOME/.shell_aliases" ]] && source "$HOME/.shell_aliases"
 [[ -d "$HOME/bin" ]] && export PATH=~/bin:$PATH
 

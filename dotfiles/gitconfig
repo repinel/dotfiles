@@ -39,6 +39,10 @@
 [difftool]
 	prompt = false
 	keepTemporaries = false
+[log]
+	date = local
+[grep]
+	lineNumber = true
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -55,3 +59,5 @@
 	helper = store --file /opt/dev/var/private/git_credential_store
 [pager]
 	branch = false
+[include]
+	path = ~/.config/dev/gitconfig
