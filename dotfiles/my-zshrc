@@ -64,6 +64,11 @@ if [ "$SPIN" ]; then
     echo "Running: $proc_cmd"
     eval "$proc_cmd"
   }
+
+  killport() {
+    port="$1"
+    fuser -k "${port}/tcp"
+  }
 else
   # colorful ls
   export LSCOLORS="Gxfxcxdxbxegedabagacad"
