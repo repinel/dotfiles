@@ -38,7 +38,32 @@ bindkey "^[[F" end-of-line
 [[ -d "$HOME/bin" ]] && export PATH=~/bin:$PATH
 
 if [ "$SPIN" ]; then
-  # for spin
+  spin-proc() {
+    process_name="$1"
+    profile=".spin/Procfile"
+
+    if [ -z "$process_name" ]; then
+      >&2 echo "The process name is required."
+      return 1
+    fi
+
+    if [ ! -f "$profile" ]; then
+      >&2 echo "Couldn't find $profile"
+      return 1
+    fi
+
+    line=$(grep "$process_name:" "$profile" | tail -n 1)
+
+    if [ -z "$line" ]; then
+      >&2 echo "The process name not found."
+      return 1
+    fi
+
+    proc_cmd="${line/"${process_name}: "/""}"
+
+    echo "Running: $proc_cmd"
+    eval "$proc_cmd"
+  }
 else
   # colorful ls
   export LSCOLORS="Gxfxcxdxbxegedabagacad"
