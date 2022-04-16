@@ -39,7 +39,7 @@ setup_nvim_config() {
 
   git submodule update --init --recursive
 
-  nvim --headless +PluginInstall +qa
+  nvim -es -u init.vim -i NONE -c "PlugInstall" -c "qa"
 
   popd
 }
