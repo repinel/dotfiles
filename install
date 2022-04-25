@@ -37,8 +37,8 @@ setup_nvim_config() {
 
   pushd "$nvim_config_dest"
 
-  log_info "Installing Neovim plugins..."
-  nvim -es -u init.vim -i NONE -c "PlugInstall" -c "qa"
+  #log_info "Installing Neovim plugins..."
+  #nvim -es -u init.vim -i NONE -c "PlugInstall" -c "qa"
 
   popd
 }
