@@ -13,6 +13,7 @@ alias bundle-ctags='ctags -R --languages=ruby --exclude=.git --exclude=log --exc
 # checkout master and run command to clean any merged branches
 alias git-clean-branches-master='git branch --merged master | grep -v "\* master" | xargs -n 1 git branch -d'
 alias git-clean-branches-main='git branch --merged main | grep -v "\* main" | xargs -n 1 git branch -d'
+alias git-clean-branches='git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
 
 alias git-ch-master='git fetch origin master && git rebase origin/master'
 alias git-ch-main='git fetch origin main && git rebase origin/main'
