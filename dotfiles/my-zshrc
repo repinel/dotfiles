@@ -65,6 +65,24 @@ if [ "$SPIN" ]; then
     eval "$proc_cmd"
   }
 
+  beta-enable() {
+    current_dir="$(pwd)"
+    beta_flag="$1"
+    shop_id="$2"
+    cd ~/src/github.com/Shopify/shopify
+    BETA="$beta_flag" SHOP_ID=${shop_id:-1} bin/rake dev:betas:enable
+    cd "$current_dir" || exit 1
+  }
+
+  beta-disable() {
+    current_dir="$(pwd)"
+    beta_flag="$1"
+    shop_id="$2"
+    cd ~/src/github.com/Shopify/shopify
+    BETA="$beta_flag" SHOP_ID=${shop_id:-1} bin/rake dev:betas:disable
+    cd "$current_dir" || exit 1
+  }
+
   killport() {
     port="$1"
     fuser -k "${port}/tcp"
