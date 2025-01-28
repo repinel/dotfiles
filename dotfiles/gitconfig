@@ -8,9 +8,9 @@
 [core]
 	autocrlf = input
 	excludesfile = ~/.gitignore
-	commitGraph = true
 [push]
 	default = simple
+	autoSetupRemote = true
 [alias]
 	ch = checkout
 	co = commit
@@ -36,7 +36,6 @@
 	tool = vimdiff
 [diff]
 	tool = vimdiff
-	algorithm = patience
 [difftool]
 	prompt = false
 	keepTemporaries = false
@@ -51,8 +50,6 @@
 	required = true
 [pull]
 	ff = true
-[gc]
-	writeCommitGraph = true
 [pager]
 	branch = false
 [include]
