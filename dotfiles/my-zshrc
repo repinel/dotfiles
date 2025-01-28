@@ -69,6 +69,10 @@ if [ "$SPIN" ]; then
     port="$1"
     fuser -k "${port}/tcp"
   }
+
+  dev-refresh() {
+    dev up && dev restart --procs
+  }
 else
   # colorful ls
   export LSCOLORS="Gxfxcxdxbxegedabagacad"
